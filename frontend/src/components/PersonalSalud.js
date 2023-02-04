@@ -26,7 +26,7 @@ const PersonalSalud = () => {
       /* <Form onSubmit={this.props.user ? this.editStudent : this.createStudent}>  */
       <form onSubmit={handleSubmit(createMedico)}>
         <div>
-            <label for="cedulamed">Cédula Andrea:</label>
+            <label for="cedulamed">Cédula:</label>
             <input
               type="integer"
               className="form-control" {...register('cedulamed')}
