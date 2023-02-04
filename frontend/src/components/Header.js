@@ -3,7 +3,7 @@ import axios from "axios";
 import { API_URL } from "../constants";
 import { useForm } from "react-hook-form";
 
-
+/* Registro de usuario */
   const Header = () => {
 
     const createUser = (data) => {
@@ -26,7 +26,7 @@ import { useForm } from "react-hook-form";
             </div>
             <div>
                 <label >Contraseña:</label>
-                <input type="text" className="form-control" {...register('userpassword')} />
+                <input type="text" className="form-control" {...register('password')} />
             </div>
             <div>
                 <label>Fecha de creación:</label>

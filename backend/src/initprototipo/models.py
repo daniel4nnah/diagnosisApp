@@ -6,7 +6,24 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
+from django.utils.timezone import now
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager 
 
+class UserAccountManager(BaseUserManager):
+    def create_user(self, useremail, userroleid=None, password=None, **extra_fields):
+        if not useremail:
+            raise ValueError('El correo es obligatorio')
+        
+        if not userroleid:
+            raise ValueError('El rol del usuario es obligatorio')
+        
+        useremail = self.normalize_email(useremail)
+        user = self.model(useremail=useremail, userroleid=userroleid, **extra_fields)
+        
+        user.set_password(password)
+        user.save()
+        
+        return user 
 
 class Approl(models.Model):
     roleid = models.AutoField(db_column='RoleId', primary_key=True)  # Field name made lowercase.
@@ -17,14 +34,19 @@ class Approl(models.Model):
         db_table = 'AppRol'
 
 
-class Appuser(models.Model):
+class Appuser(AbstractBaseUser):
     userid = models.AutoField(db_column='UserId', primary_key=True)  # Field name made lowercase.
-    useremail = models.CharField(db_column='UserEmail', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    userpassword = models.CharField(db_column='UserPassword', max_length=100, blank=True, null=True)  # Field name made lowercase.
-    savedate = models.DateTimeField(db_column='SaveDate', blank=True, null=True)  # Field name made lowercase.
-    changepassworddate = models.DateTimeField(db_column='ChangePasswordDate', blank=True, null=True)  # Field name made lowercase.
+    last_login = models.DateTimeField(db_column= 'last_login', blank=True, null=True)
+    useremail = models.CharField(db_column='UserEmail', unique=True, max_length=100, blank=True, null=True)  # Field name made lowercase.
+    password = models.CharField(db_column='UserPassword', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    savedate = models.DateTimeField(db_column='SaveDate', auto_now_add=True, blank=True, null=True)  # Field name made lowercase.
     userroleid = models.ForeignKey(Approl, models.DO_NOTHING, db_column='UserRoleId')  # Field name made lowercase.
+    is_active = models.BooleanField(db_column='is_active', default=True)
 
+    objects = UserAccountManager()
+    
+    USERNAME_FIELD = 'useremail'
+    REQUIRED_FIELDS = ['password', 'userroleid']
     class Meta:
         managed = False
         db_table = 'AppUser'
