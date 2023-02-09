@@ -29,14 +29,6 @@ import { useForm } from "react-hook-form";
                 <input type="text" className="form-control" {...register('password')} />
             </div>
             <div>
-                <label>Fecha de creación:</label>
-                <input type="text" className="form-control" {...register('savedate')} />
-            </div>
-            <div>
-                <label >Fecha cambio contraseña:</label>
-                <input type="text" className="form-control" {...register('changepassworddate')} />
-            </div>
-            <div>
                 <label>Rol:</label>
                 <input type="text" className="form-control" {...register('userroleid')} />
             </div>
