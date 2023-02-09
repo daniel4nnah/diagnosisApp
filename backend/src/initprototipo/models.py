@@ -8,6 +8,7 @@
 from django.db import models
 from django.utils.timezone import now
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager 
+from .validators import val_cedulamed, val_cedulaext
 
 class UserAccountManager(BaseUserManager):
     def create_user(self, useremail, userroleid=None, password=None, **extra_fields):
@@ -102,8 +103,33 @@ class Paciente(models.Model):
         managed = False
         db_table = 'Paciente'
 
+class MedicoManager(models.Manager):
+    def create_medico(self, nombresmed, apellidosmed, direccionmed, telefonomed, cedulamed=None, userid=None, hospitalid=None, **extra_fields):
+        if not cedulamed:
+            raise ValueError('El número de documento es obligatorio')
+        
+        if not nombresmed:
+            raise ValueError('El nombre es obligatorio')
+        
+        if not apellidosmed:
+                raise ValueError('El apellido es obligatorio')
+            
+        if not hospitalid:
+                raise ValueError('El usuario debe estar asociado a un hospital')
+
+        if not userid:
+                raise ValueError('El usuario debe estar asociado a un usuario')
+        
+        personal_salud = self.model(cedulamed=cedulamed, nombresmed=nombresmed, apellidosmed=apellidosmed, direccionmed=direccionmed, telefonomed=telefonomed, userid=userid, hospitalid=hospitalid, **extra_fields)
+        
+        personal_salud.save()
+        
+        return personal_salud 
+        #return super().get_queryset().filter()
+
+
 class Personalsalud(models.Model):
-    cedulamed = models.IntegerField(db_column='cedulaMed', primary_key=True)  # Field name made lowercase.
+    cedulamed = models.IntegerField(db_column='cedulaMed', primary_key=True, validators=[val_cedulamed])  # Field name made lowercase.
     nombresmed = models.CharField(db_column='nombresMed', max_length=150, blank=True, null=True)  # Field name made lowercase.
     apellidosmed = models.CharField(db_column='apellidosMed', max_length=150, blank=True, null=True)  # Field name made lowercase.
     telefonomed = models.CharField(db_column='telefonoMed', max_length=50, blank=True, null=True)  # Field name made lowercase.
@@ -111,6 +137,10 @@ class Personalsalud(models.Model):
     userid = models.ForeignKey(Appuser, models.DO_NOTHING, db_column='UserId', blank=True, null=True)  # Field name made lowercase.
     hospitalid = models.ForeignKey(Hospital, models.DO_NOTHING, db_column='HospitalId', blank=True, null=True)  # Field name made lowercase.
 
+    objects = MedicoManager()
+    
+    REQUIRED_FIELDS = ['cedulamed', 'nombresmed', 'apellidosmed', 'telefonomed', 'direccionmed', 'userid', 'hospitalid']
+    
     class Meta:
         managed = False
         db_table = 'PersonalSalud'
@@ -240,12 +270,11 @@ class Unidad(models.Model):
 
 
 class Usuarioexterno(models.Model):
-    cedulaext = models.IntegerField(db_column='cedulaExt', primary_key=True)  # Field name made lowercase.
+    cedulaext = models.IntegerField(db_column='cedulaExt', primary_key=True, validators=[val_cedulaext])  # Field name made lowercase.
     nombresext = models.CharField(db_column='nombresExt', max_length=150, blank=True, null=True)  # Field name made lowercase.
     apellidosext = models.CharField(db_column='apellidosExt', max_length=150, blank=True, null=True)  # Field name made lowercase.
     telefonoext = models.CharField(db_column='telefonoExt', max_length=50, blank=True, null=True)  # Field name made lowercase.
     direccionext = models.CharField(db_column='direccionExt', max_length=200, blank=True, null=True)  # Field name made lowercase.
-    expirationdate = models.DateTimeField(db_column='ExpirationDate', blank=True, null=True)  # Field name made lowercase.
     userid = models.ForeignKey(Appuser, models.DO_NOTHING, db_column='UserId', blank=True, null=True)  # Field name made lowercase.
     institutionid = models.ForeignKey(Institucion, models.DO_NOTHING, db_column='InstitutionId', blank=True, null=True)  # Field name made lowercase.
 

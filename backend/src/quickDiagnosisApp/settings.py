@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djoser',
     'rest_framework',
+    'rest_framework.authtoken',
     'initprototipo'
 ]
 
@@ -144,8 +145,13 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.IsAuthenticated'
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+
         (...)
     ),
 }
@@ -170,7 +176,7 @@ DJOSER = {
         'user_create': 'initprototipo.serializers.UserCreateSerializer',
         'user': 'initprototipo.serializers.UserCreateSerializer',
         'user_delete': 'initprototipo.serializers.UserDeleteSerializer',
-        
+        'personal_salud_create': 'initprototipo.serializers.PersonalSaludSerializer',
     }
 }
 
