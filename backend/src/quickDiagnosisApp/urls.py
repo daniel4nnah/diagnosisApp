@@ -9,6 +9,7 @@ router.register(r'todos', views.users_list, 'todo')
 
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
+    path('', TemplateView.as_view(template_name='index.html')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
     path('admin/', admin.site.urls),
