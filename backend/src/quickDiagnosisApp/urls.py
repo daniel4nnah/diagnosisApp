@@ -14,6 +14,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/users/', views.users_list),
     path('api/medico/', views.personal_salud),
+    path('api/externo/', views.usuario_externo),
 ]
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
