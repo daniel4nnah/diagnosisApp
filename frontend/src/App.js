@@ -1,18 +1,18 @@
-import React, { Component, Fragment } from "react";
-import Header from "./components/Header";
-import PersonalSalud from "./components/PersonalSalud";
+import React from "react";
+//import Ejemplo from './components/ejemplo'
+import "./App.css";
+//import Welcome from "./components/welcome";
+//import Body from "./components/vtc/body";
+//import Header from "./components/vtc/header";
+import Sidebar from "./components/vtc/sidebar";
 
-/*import Home from "./components/Home";*/
+function App() {
+  return (
+    <div>
+      <Sidebar />
+    </div>
+  );
 
-class App extends Component {
-  render() {
-    return (
-      <Fragment>
-        <Header />
-        <PersonalSalud />
-      </Fragment>
-    );
-  }
 }
 
 export default App;

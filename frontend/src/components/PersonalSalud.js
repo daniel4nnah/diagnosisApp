@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { API_URL_MED } from "../constants";
 import { useForm } from "react-hook-form";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PersonalSalud = () => {
 
