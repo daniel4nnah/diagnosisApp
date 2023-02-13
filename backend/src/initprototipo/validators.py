@@ -12,3 +12,4 @@ def val_cedulaext(cedulaext):
         raise ValidationError("El número de identificación debe sere mayor a 4 digitos") 
     if len(str(cedulaext)) > 10:
         raise ValidationError("El número de identificación no puede exceder los 10 dígitos") 
+    
