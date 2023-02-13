@@ -1,26 +1,18 @@
-import React, { Component, Fragment } from "react";
-import Header from "./components/Header";
-import PersonalSalud from "./components/PersonalSalud";
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+//import Ejemplo from './components/ejemplo'
+import "./App.css";
+//import Welcome from "./components/welcome";
+//import Body from "./components/vtc/body";
+import Header from "./components/vtc/header";
+//import Sidebar from "./components/vtc/sidebar";
 
+function App() {
+  return (
+    <div>
+      <Header />
+    </div>
+  );
 
-/*import Home from "./components/Home";*/
-
-class App extends Component {
-  render() {
-    return (
-      <Fragment>
-      <div>
-        <header className="App-header">
-          <h1> Hola! </h1>
-          <button type="button" class="btn btn-primary">Primary</button>
-        </header>
-      </div>
-        <Header />
-        <PersonalSalud />
-      </Fragment>
-    );
-  }
 }
 
 export default App;

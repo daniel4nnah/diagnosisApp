@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { API_URL } from "../constants";
 import { useForm } from "react-hook-form";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 /* Registro de usuario */
   const Header = () => {
