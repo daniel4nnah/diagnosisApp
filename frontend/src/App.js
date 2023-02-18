@@ -7,13 +7,20 @@ import Login from "./components/Login";
 //import Body from "./components/vtc/body";
 //import Header from "./components/Header";
 import Header1 from "./components/vtc/Header1";
-//import Sidebar from "./components/vtc/sidebar";
-
+/* import Cuerpo from "./components/Cuerpo";
+import Sidebar from "./components/vtc/Sidebar";
+import Greting from "./components/Greting";   */
+//import Menu from "./components/Menu";
 function App() {
   return (
     <div >
+      {/* <Sidebar/>
+      <Greting/>
+      <Cuerpo/>  */}
       <Header1/>
-      <Login/>
+      <Login/> 
+      
+      
     </div>
   );
 
